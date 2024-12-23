@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Utama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+        }
+        nav {
+            margin-top: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+            margin: 10px;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+
+        #video-container {
+            margin-bottom: 20px;
+        }
+
+        iframe {
+            width: 80;
+            height: 40o px;
+            border: none;
+        }
+
+        table {
+            margin: 20px auto;
+            width: 80%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        #add-developer-btn {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Selamat Datang di Aplikasi Demo TypeScript</h1>
+    <nav>
+        <a href="/" id="welcome">Halaman Utama</a>
+        <a href="#list" id="list">Daftar Developer</a>
+        <a href="#users" id="users">Daftar Pengguna</a>
+    </nav>
+    <div id="content"></div>
+     
+      <!-- Container untuk embed video -->
+    <div id="videoContainer">
+        <h2>Embed Video</h2>
+        <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/DCQHfrqMKXA?si=5q2Op99hHDMmMEnE&amp;start=90" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        allowfullscreen>
+    </iframe>
+    </div>
+     <div id="video-container"></div>
+     
+     
+
+    <!-- Script TypeScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const listLink = document.getElementById("list");
+            const contentDiv = document.getElementById("content");
+    
+            listLink.addEventListener("click", () => {
+                // Ambil data dari localStorage
+                const storedDevelopers = localStorage.getItem("developers");
+                const developers = storedDevelopers ? JSON.parse(storedDevelopers) : [];
+    
+                // Tampilkan data dalam tabel dengan tombol tambah
+                contentDiv.innerHTML = `
+                    <h2>Daftar Developer</h2>
+                    <button id="add-developer-btn">Tambah Developer</button>
+                    <table border="1" style="margin: 0 auto; width: 80%; text-align: left;">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${developers
+                                .map(
+                                    (dev) => `
+                                <tr>
+                                    <td>${dev.developerId}</td>
+                                    <td>${dev.nama}</td>
+                                    <td>${dev.email}</td>
+                                    <td>${dev.role}</td>
+                                    <td><button class="edit-btn" data-id="${dev.developerId}">Edit</button></td>
+                                </tr>
+                            `
+                                )
+                                .join("")}
+                        </tbody>
+                    </table>
+                `;
+
+                // event listener untuk tombol Tambah Developer
+                const addBtn = document.getElementById("add-developer-btn");
+                addBtn.addEventListener("click", () => {
+                    const newDev = prompt("Masukkan data developer (format: Nama,Email,Role)");
+                    if (newDev) {
+                        const [nama, email, role] = newDev.split(",");
+                        const newDeveloper = {
+                            developerId: Date.now().toString(),
+                            nama: nama || "Nama Kosong",
+                            email: email || "Email Kosong",
+                            role: role || "Role Kosong"
+                        };
+                        developers.push(newDeveloper);
+                        localStorage.setItem("developers", JSON.stringify(developers));
+                        alert("Developer berhasil ditambahkan!");
+                        listLink.click(); // Refresh daftar
+                    }
+                });
+
+                // event listener untuk tombol Edit Developer
+                const editBtns = document.querySelectorAll(".edit-btn");
+                editBtns.forEach((btn) => {
+                    btn.addEventListener("click", (event) => {
+                        const devId = event.target.getAttribute("data-id");
+                        const devToEdit = developers.find((dev) => dev.developerId === devId);
+                        if (devToEdit) {
+                            const updatedData = prompt(
+                                `Edit data developer (format: Nama,Email,Role)\n\nData saat ini: ${devToEdit.nama},${devToEdit.email},${devToEdit.role}`
+                            );
+                            if (updatedData) {
+                                const [nama, email, role] = updatedData.split(",");
+                                devToEdit.nama = nama || devToEdit.nama;
+                                devToEdit.email = email || devToEdit.email;
+                                devToEdit.role = role || devToEdit.role;
+                                localStorage.setItem("developers", JSON.stringify(developers));
+                                alert("Data developer berhasil diperbarui!");
+                                listLink.click(); // Refresh daftar
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

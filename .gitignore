@@ -1,0 +1,22 @@
+# File log
+*.log
+
+# Direktori build
+/build/
+/target/
+/node_modules/
+/dist/
+# File pengaturan IDE
+/.idea/
+/*.iml
+/.vscode/
+/.classpath
+/.project
+/.settings/
+
+# File OS
+.DS_Store
+Thumbs.db
+
+# File environment
+.env

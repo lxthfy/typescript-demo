@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Produk</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Developer</h1>
+    <h2>Tambah Data Developer</h2>
+    <form id="addForm">
+        <label for="addName">Nama Developer</label>
+        <input type="text" id="addName" required>
+        <label for="addEmail">Email</label>
+        <input type="email" id="addEmail" required>
+        <label for="Role" >Role</label>
+        <input type="text" id="addRole" required>
+        <button type="submit">Submit</button>
+    </form>
+    <table id="developers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama Developer</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+     <!-- Modal Edit Data -->
+     <div id="editModal" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -20%); border: 1px solid #ccc; background-color: #fff; padding: 20px; z-index: 1000;">
+        <h2>Edit Developer</h2>
+        <form id="editForm">
+            <input type="hidden" id="editId">
+            <label for="editName">Nama Developer:</label>
+            <input type="text" id="editName" required>
+            <label for="editEmail">Email:</label>
+            <input type="email" id="editEmail" required>
+            <label for="editRole">Role:</label>
+            <input type="text" id="editRole" required>
+            <button type="submit">Simpan</button>
+        </form>
+        <button id="closeModal">Tutup</button>
+    </div>
+
+    <script type="module" src="bundle.js"></script>
+    <!-- Script Bundle dari TypeScript -->
+    <!-- <script type="module" src="dist/app.js"></script> -->
+</body>
+</html>
+

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                // Menetapkan target output JavaScript
+    "module": "ESNext",             // Menggunakan module ESNext
+    "moduleResolution": "node",     // Menyelesaikan modul dengan cara Node.js
+    "outDir": "./dist",             // Menentukan output folder
+    "rootDir": "./src",             // Menentukan root folder untuk file sumber TypeScript
+    "strict": true,                 // Mengaktifkan mode strict
+    "esModuleInterop": true,        // Mengizinkan impor modul ECMAScript
+    "skipLibCheck": true,           // Melewati pemeriksaan jenis pada file .d.ts
+    "forceConsistentCasingInFileNames": true // Memaksa konsistensi penamaan file
+  },
+  "include": [
+    "src/**/*.ts"                   // Menentukan file TypeScript yang akan dikompilasi
+  ],
+  "exclude": [
+    "node_modules"                  // Mengecualikan folder node_modules
+  ]
+}
